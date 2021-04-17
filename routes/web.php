@@ -4,6 +4,7 @@ use App\Container;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Test;
+use App\TestFacade;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function(){
-    dd(resolve('request'));
-
+    dd(TestFacade::execute());
 });
 
 Route::resource('posts', HomeController::class)->middleware(['auth:sanctum','verified']);
