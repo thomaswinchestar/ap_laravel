@@ -1,7 +1,10 @@
 <?php
 
+use App\Container;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Test;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create    something great!
 |
 */
+
+Route::get('/', function(){
+    dd(resolve('request'));
+
+});
 
 Route::resource('posts', HomeController::class)->middleware(['auth:sanctum','verified']);
 

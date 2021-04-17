@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,8 +52,9 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post,Test $test)
     {
+        dd($test);
 //        if($post->user_id !== auth()->id()){
 //            abort(403);
 //        }
