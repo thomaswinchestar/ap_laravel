@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storePostRequest;
+use App\Mail\PostCreated;
+use App\Mail\PostDeleted;
+use App\Mail\PostStored;
+use App\Mail\PostUpdated;
 use App\Models\Category;
 use App\Models\Post;
 use App\Test;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 class HomeController extends Controller
@@ -16,9 +22,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
+//        $request->session()->flash('status', 'Login successfully!');
         return view('home', compact('data'));
     }
 
@@ -42,8 +49,10 @@ class HomeController extends Controller
     public function store(storePostRequest $request)
     {
         $validated = $request->validated();
-        Post::create($validated);
-        return redirect('/posts');
+        $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
+//        Mail::to('hlaing@gmail.com')->send(new PostCreated());
+//        Mail::to('hlaing@gmail.com')->send(new PostStored($post));
+        return redirect('/posts')->with('create', config('aprogrammer.message.created'));
     }
 
     /**
@@ -52,9 +61,9 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post,Test $test)
+    public function show(Post $post)
     {
-        dd($test);
+
 //        if($post->user_id !== auth()->id()){
 //            abort(403);
 //        }
@@ -89,7 +98,8 @@ class HomeController extends Controller
     {
         $validated = $request->validated();
         $post->update($validated);
-        return redirect('/posts');
+//        Mail::to('hlaing@gmail.com')->send(new PostUpdated($post));
+        return redirect('/posts')->with('update', config('aprogrammer.message.updated'));
 
     }
 
@@ -102,6 +112,7 @@ class HomeController extends Controller
     public function destroy(Post $post)
     {
        $post->delete();
-       return redirect(('/posts'));
+//       Mail::to('hlaing@gmail.com')->send(new PostDeleted($post));
+       return redirect(('/posts'))->with('delete', config('aprogrammer.message.deleted'));
     }
 }

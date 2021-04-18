@@ -8,6 +8,22 @@
             <h4 style="float: right">{{Auth::user()->name}}</h4>
         </div>
         <br>
+        @if (session('create'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('create') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @elseif(session('update'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Update!</strong> {{ session('update') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @elseif(session('delete'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Delete!</strong> {{ session('delete') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="card">
             <div class="card-header" style="text-align: center">
                 Contents
