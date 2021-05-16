@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storePostRequest;
+use App\Test;
+use App\Models\Post;
+use App\Mail\PostStored;
+use App\Models\Category;
 use App\Mail\PostCreated;
 use App\Mail\PostDeleted;
-use App\Mail\PostStored;
 use App\Mail\PostUpdated;
-use App\Models\Category;
-use App\Models\Post;
-use App\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Requests\storePostRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PostCreatedNotification;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        Notification::route('hlaing@gmail.com', new PostCreatedNotification());
         $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
 //        $request->session()->flash('status', 'Login successfully!');
         return view('home', compact('data'));
