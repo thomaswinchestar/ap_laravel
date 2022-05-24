@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function(){
-    dd(TestFacade::execute());
+    // dd(TestFacade::execute());
+    return view('welcome');
 });
+
 
 Route::resource('posts', HomeController::class)->middleware(['auth:sanctum','verified']);
 

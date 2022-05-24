@@ -29,7 +29,7 @@
                 Contents
             </div>
             <div class="card-body">
-                @foreach($data as $post)
+                @foreach($data ?? '' as $post)
                    <div>
                        <h5 class="card-title">{{ $post->name }}</h5>
                        <p class="card-text">{{ $post->description }}</p>
